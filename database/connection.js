@@ -3,7 +3,6 @@ const {MONGOCLOUD_DB,DB,WHICH_DATABASE} = require('../config/envCrediantials')
 let url;
 if(WHICH_DATABASE.WHICH_DATABASE==="CLOUD"){
     url=MONGOCLOUD_DB.CLOUD_URL
-    console.log('the url is $$$$$$$$$$$$$$$$$$$$$$4',url)
 }
 else{
     url=`mongodb://${DB.HOST}:${DB.PORT}/${DB.NAME}`
