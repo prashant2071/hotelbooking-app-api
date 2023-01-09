@@ -3,9 +3,11 @@ const dotenv = require('dotenv')
 dotenv.config();
 const app =express();
 const connectDatabase = require('./database/connection');
+const authRoute = require('./routes/auth')
+const userRoute = require('./routes/user')
 connectDatabase();
 
-
+app.use('/auth',authRoute)
 
 
 
