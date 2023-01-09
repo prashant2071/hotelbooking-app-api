@@ -65,7 +65,7 @@ const deleteHotel = async (req,res) =>{
 }
 module.exports={
     getAllHotels,
-    getHoteById,
+    getHotelById,
     createHotel,
     updateHotel,
     replaceHotel,
