@@ -6,7 +6,8 @@ const cloumnType={
 }
 const HotelSchema = new Schema({
     name :{
-        ...cloumnType
+        ...cloumnType,
+        unique:true
     },
     type:{
         ...cloumnType

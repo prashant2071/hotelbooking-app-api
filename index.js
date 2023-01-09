@@ -11,9 +11,11 @@ const roomRoute = require('./routes/room')
 const {SERVERPORT} = require('./config/envCrediantials')
 connectDatabase();
 
-app.use('/auth',authRoute)
+app.use(express.json())
+
+app.use('/api/auth',authRoute)
 // app.use('/user',userRoute)
-app.use('/hotel',hotelRoute)
+app.use('/api/hotel',hotelRoute)
 // app.use('/room',roomRoute)
 
 
