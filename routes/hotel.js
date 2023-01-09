@@ -1,28 +1,10 @@
 const express = require("express");
 const hotelModel = require("../models/hotelModel");
+const {getAllHotels,getHoteById,createHotel,updateHotel,replaceHotel,deleteHotel} =require("../controller/hotelController")
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-  const Hotel = new hotelModel(req.body);
-  try {
-    const savedHotel = await Hotel.save();
-    res.status(200).json({
-      message: "hotel saved successfully",
-      data: savedHotel,
-    });
-  } 
-  catch (err) {
-    if (err.code === 11000) {
-      res.status(500).json({
-        errMessage: "Duplicate data",
-        message:"same data already exist",
-        errorCode:err.code
-      });
-    } else {
-      res.status(500).json({
-        message: err.message,
-      });
-    }
-  }
-});
+
+router.post("/hotel",createHotel );
+router.patch("/hotel/:id", updateHotel);
+router.put("/:id",replaceHotel);
 module.exports = router;
