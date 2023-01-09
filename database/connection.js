@@ -8,27 +8,27 @@ else{
     url=`mongodb://${DB.HOST}:${DB.PORT}/${DB.NAME}`
 }
 const connectDatabase = async() => {
-            mongoose.set('strictQuery', true);
-            mongoose.connect(url).
-            then(()=>{
-                console.log("database connected successfully")
-            }).catch((err)=>{
-                console.log("database connection failed",err)
-            });
-    // try {    
-    //     mongoose.set('strictQuery', true);
-    //     await mongoose.connect("mongodb+srv://PRASHANT:PRASHANT@123GO@cluster0.zslpnqq.mongodb.net/booking?retryWrites=true&w=majority");
-    //     console.log('database connected successfully :)');
-    //   } catch (error) {
-    //     console.log('database connection failed! error is',error);
-    //     throw(error);
-    // }
+            // mongoose.set('strictQuery', true);
+            // mongoose.connect(url).
+            // then(()=>{
+            //     console.log("database connected successfully")
+            // }).catch((err)=>{
+            //     console.log("database connection failed",err)
+            // });
+    try {    
+        mongoose.set('strictQuery', true);
+        await mongoose.connect(url);
+        console.log('database connected successfully :)');
+      } catch (error) {
+        console.log('database connection failed! error is',error);
+        throw(error);
+    }
 
 }
-// mongoose.connection.on("disconnected",()=>{
-//     console.log("disconnected backend")
-// })
-// mongoose.connection.on("connected",()=>{
-//     console.log("connected backend")
-// })
+mongoose.connection.on("disconnected",()=>{
+    console.log("disconnected backend")
+})
+mongoose.connection.on("connected",()=>{
+    console.log("connected backend")
+})
 module.exports = connectDatabase; 
