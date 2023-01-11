@@ -9,5 +9,5 @@ router.get("/:id",getHotelById );
 router.post("/",createHotel );
 router.patch("/:id", updateHotel);
 router.put("/:id",replaceHotel);
-router.delete("/",deleteHotel );
+router.delete("/:id",deleteHotel );
 module.exports = router;
