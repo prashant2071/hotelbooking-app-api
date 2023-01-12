@@ -1,9 +1,9 @@
 const express =require('express')
 const app =express()
-const authRoute = require('./auth')
-const userRoute = require('./user')
-const hotelRoute = require('./hotel')
-const roomRoute = require('./room')
+const authRoute = require('./authRoute')
+const userRoute = require('./userRoute')
+const hotelRoute = require('./hotelRoute')
+const roomRoute = require('./roomRoute')
 
 app.use('/auth',authRoute)
 // app.use('/user',userRoute)

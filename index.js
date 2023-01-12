@@ -19,13 +19,17 @@ app.all("*", (req, res,next) => {
         message:"page not found"
     });
   });
+   
+
+  //error handelling middleware
   app.use( function(err, req, res,next) {
     console.log("the error is",err);
     res
-    .status(400)
+    .status(err.status)
     .json({
-      msg: err.message|| err || "something went",
-      status: err.status || 400,
+      msg: err.message|| err ,
+      status: err.status ,
+      code:err.code,
       stack :err.stack
     });
   });

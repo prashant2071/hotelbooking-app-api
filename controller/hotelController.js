@@ -1,6 +1,7 @@
+const nextHandlers = require("../helpers/nextHandlers");
 const hotelModel = require("../models/hotelModel");
 
-const getAllHotels = async (req,res) =>{
+const getAllHotels = async (req,res,next) =>{
     const {id} = req.params
     try {
       const updatedHotel = await hotelModel.find()
@@ -10,9 +11,7 @@ const getAllHotels = async (req,res) =>{
       });
     } 
     catch (err) {
-        res.status(500).json({
-            message:"fetched hotel failed"
-        })
+        next(nextHandlers("hotel fetching faild",err.status,err.code,err.stack))
       }
     }
 const getHotelById = async (req,res,next) =>{
@@ -25,10 +24,10 @@ const getHotelById = async (req,res,next) =>{
       });
     } 
     catch (err) {
-      next(err)
+      next(nextHandlers(err.message,err.status,err.code,err.stack))
       }
     }
-const createHotel = async (req,res) =>{
+const createHotel = async (req,res,next) =>{
     const Hotel = new hotelModel(req.body);
     try {
       const savedHotel = await Hotel.save();
@@ -39,19 +38,19 @@ const createHotel = async (req,res) =>{
     } 
     catch (err) {
       if (err.code === 11000) {
-        res.status(500).json({
-          errMessage: "Duplicate data",
-          message:"same data already exist",
-          errorCode:err.code
-        });
+        // next({
+        //   message :"Duplicate data, data already exist",
+        //   status:500,
+        //   code:err.code,
+        //   stack:err.stack
+        // })
+        next(nextHandlers("duplicate data already exist",500,err.code,err.stack))
       } else {
-        res.status(500).json({
-          message: err.message,
-        });
+        next(nextHandlers(err.message,err.status,err.code,err.stack));
       }
     }
 }
-const updateHotel = async (req,res) =>{
+const updateHotel = async (req,res,next) =>{
     const {id} = req.params
     try {
       const updatedHotel = await hotelModel.findByIdAndUpdate(id,{$set:req.body},{new:true})
@@ -61,13 +60,11 @@ const updateHotel = async (req,res) =>{
       });
     } 
     catch (err) {
-        res.status(500).json({
-            message:"hotel update failed"
-        })
+        next(nextHandlers("hotel update failed",err.status,err.code,err.stack))
       }
     }
 
-const replaceHotel = async (req,res) =>{
+const replaceHotel = async (req,res,next) =>{
     const {id} = req.params
     try {
       const replacedHotel = await hotelModel.findOneAndReplace(id,{$set:req.body},{new:true})
@@ -77,12 +74,10 @@ const replaceHotel = async (req,res) =>{
       });
     } 
     catch (err) {
-        res.status(500).json({
-            message:"hotel replaced failed"
-        })
+        next(nextHandlers("hotel replacing failed",err.status,err.code,err.stack))
       }
     }
-const deleteHotel = async (req,res) =>{
+const deleteHotel = async (req,res,next) =>{
     const {id} = req.params
     try {
       const deletedHotel = await hotelModel.findByIdAndDelete(id,{$set:req.body})
@@ -92,9 +87,7 @@ const deleteHotel = async (req,res) =>{
       });
     } 
     catch (err) {
-        res.status(500).json({
-            message:"hotel deletion failed"
-        })
+        next(nextHandlers("hotel deletion failed",err.status,err.code,err.stack))
       }
     }
 
