@@ -1,20 +1,24 @@
 const mongoose =require('mongoose');
+const validator = require('validator')
 const {Schema} = mongoose
-const cloumnType={
+const dataType={
     type:String,
-    required:true
+    required:[true,"required feild"]
 }
 const UserSchema = new Schema({
     username :{
-        ...cloumnType,
-        unique:true
+        ...dataType,
+        unique:true,
+        minlength:[5,"username length must be greater then 4"]
     },
     email:{
-        ...cloumnType,
-        unique:true 
+        ...dataType,
+        unique:true ,
+        validate:[validator.isEmail,"Email must be Valid"]
     },
     password:{
-        ...cloumnType
+        ...dataType,
+        minlength:[6,"password must be greater then 6"]
     },
     role:{
         type:Number,

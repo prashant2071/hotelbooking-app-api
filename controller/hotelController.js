@@ -11,7 +11,7 @@ const getAllHotels = async (req,res,next) =>{
       });
     } 
     catch (err) {
-        next(nextHandlers("hotel fetching faild",err.status,err.code,err.stack))
+        next(nextHandlers("hotel fetching faild",err))
       }
     }
 const getHotelById = async (req,res,next) =>{
@@ -24,7 +24,7 @@ const getHotelById = async (req,res,next) =>{
       });
     } 
     catch (err) {
-      next(nextHandlers(err.message,err.status,err.code,err.stack))
+      next(nextHandlers(err.message,err))
       }
     }
 const createHotel = async (req,res,next) =>{
@@ -46,7 +46,7 @@ const createHotel = async (req,res,next) =>{
         // })
         next(nextHandlers("duplicate data already exist",500,err.code,err.stack))
       } else {
-        next(nextHandlers(err.message,err.status,err.code,err.stack));
+        next(nextHandlers(err.message,err));
       }
     }
 }
@@ -60,7 +60,7 @@ const updateHotel = async (req,res,next) =>{
       });
     } 
     catch (err) {
-        next(nextHandlers("hotel update failed",err.status,err.code,err.stack))
+        next(nextHandlers("hotel update failed!!",err))
       }
     }
 
@@ -74,7 +74,7 @@ const replaceHotel = async (req,res,next) =>{
       });
     } 
     catch (err) {
-        next(nextHandlers("hotel replacing failed",err.status,err.code,err.stack))
+        next(nextHandlers("hotel replacing failed!!",err))
       }
     }
 const deleteHotel = async (req,res,next) =>{
@@ -87,7 +87,7 @@ const deleteHotel = async (req,res,next) =>{
       });
     } 
     catch (err) {
-        next(nextHandlers("hotel deletion failed",err.status,err.code,err.stack))
+        next(nextHandlers("hotel deletion failed!!",err))
       }
     }
 

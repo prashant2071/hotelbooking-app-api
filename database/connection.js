@@ -15,14 +15,14 @@ const connectDatabase = async() => {
             // then(()=>{
             //     console.log("database connected successfully")
             // }).catch((err)=>{
-            //     console.log("database connection failed",err)
+            //     console.log("database connection failed!!",err)
             // });
     try {    
         mongoose.set('strictQuery', true);
         await mongoose.connect(url.url);
         console.log(`connected to ${url.type} database successfully :)`);
       } catch (error) {
-        console.log('database connection failed! error is',error);
+        console.log('database connection failed!!! error is',error);
         throw(error);
     }
 

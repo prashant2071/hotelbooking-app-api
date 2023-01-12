@@ -6,7 +6,7 @@ const hotelRoute = require('./hotelRoute')
 const roomRoute = require('./roomRoute')
 
 app.use('/auth',authRoute)
-// app.use('/user',userRoute)
+app.use('/user',userRoute)
 app.use('/hotel',hotelRoute)
 // app.use('/room',roomRoute)
 

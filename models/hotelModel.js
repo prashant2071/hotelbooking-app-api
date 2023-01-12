@@ -1,34 +1,34 @@
 const mongoose =require('mongoose');
 const {Schema} = mongoose
-const cloumnType={
+const dataType={
     type:String,
     required:true
 }
 const HotelSchema = new Schema({
     name :{
-        ...cloumnType,
+        ...dataType,
         unique:true
     },
     type:{
-        ...cloumnType
+        ...dataType
     },
     city:{
-        ...cloumnType
+        ...dataType
     },
     address:{
-        ...cloumnType
+        ...dataType
     },
     distance:{
-        ...cloumnType
+        ...dataType
     },
     photos:{
         type:[String],
     },
     title:{
-        ...cloumnType
+        ...dataType
     },
     description:{
-        ...cloumnType
+        ...dataType
     },
     rating:{
         type:Number,

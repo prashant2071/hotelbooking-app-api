@@ -28,6 +28,7 @@ app.all("*", (req, res,next) => {
     .status(err.status)
     .json({
       msg: err.message|| err ,
+      errMessage:err.errMessage,
       status: err.status ,
       code:err.code,
       stack :err.stack
@@ -37,7 +38,7 @@ app.all("*", (req, res,next) => {
 
 app.listen(SERVERPORT.PORT,(err)=>{
     if(err){
-        console.log("server connection failed!")
+        console.log("server connection failed!!!")
         return;
     }
     else{
