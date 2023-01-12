@@ -24,7 +24,7 @@ const getHotelById = async (req,res,next) =>{
       });
     } 
     catch (err) {
-      next(nextHandlers(err.message,err))
+      next(nextHandlers("failed to find hotel",err))
       }
     }
 const createHotel = async (req,res,next) =>{
@@ -38,15 +38,9 @@ const createHotel = async (req,res,next) =>{
     } 
     catch (err) {
       if (err.code === 11000) {
-        // next({
-        //   message :"Duplicate data, data already exist",
-        //   status:500,
-        //   code:err.code,
-        //   stack:err.stack
-        // })
-        next(nextHandlers("duplicate data already exist",500,err.code,err.stack))
+        next(nextHandlers("duplicate data already exist",err))
       } else {
-        next(nextHandlers(err.message,err));
+        next(nextHandlers("hotel creation failed",err));
       }
     }
 }

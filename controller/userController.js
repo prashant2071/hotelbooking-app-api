@@ -1,4 +1,4 @@
-const handleError = require('../helpers/handleError');
+const handleUserError = require('../errorModelHandler/handleUserError');
 const nextHandlers = require('../helpers/nextHandlers');
 const userModel = require('../models/userModel')
 
@@ -13,9 +13,7 @@ const createUser =async (req,res,next) =>{
         data:user
     })
 }catch(err){
-    const errors= handleError(err);
-    // errors.model="user"
-    // res.status(500).json(errors)
+    const errors= handleUserError(err);
     next(nextHandlers("user creation failed",errors))
 }
 
