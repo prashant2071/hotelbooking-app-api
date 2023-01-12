@@ -15,7 +15,7 @@ const getAllHotels = async (req,res) =>{
         })
       }
     }
-const getHotelById = async (req,res) =>{
+const getHotelById = async (req,res,next) =>{
     const {id} = req.params
     try {
       const getHotelById = await hotelModel.findById(id)
@@ -25,9 +25,7 @@ const getHotelById = async (req,res) =>{
       });
     } 
     catch (err) {
-        res.status(500).json({
-            message:"hotel fetched by id failed"
-        })
+      next(err)
       }
     }
 const createHotel = async (req,res) =>{
