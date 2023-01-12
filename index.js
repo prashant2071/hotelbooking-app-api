@@ -25,11 +25,11 @@ app.all("*", (req, res,next) => {
   app.use( function(err, req, res,next) {
     console.log("the error is",err);
     res
-    .status(err.status)
+    .status(err.status||500)
     .json({
       msg: err.message|| err ,
       errMessage:err.errMessage,
-      status: err.status ,
+      status: err.status||500 ,
       code:err.code,
       stack :err.stack
     });

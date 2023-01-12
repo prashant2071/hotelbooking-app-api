@@ -1,6 +1,4 @@
 const nextHandlers = (message,error) =>{
-    console.log("next handlers errors",error)
-    
     const err={
         success:false,
         message:message||"something went wrong" ,

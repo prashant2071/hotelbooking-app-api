@@ -5,8 +5,8 @@ const {createUser} =require("../controller/userController")
 
 // router.get("/",getAllHotels );
 // router.get("/:id",getHotelById );
-router.post("/",createUser );
+// router.post("/",createUser );
 // router.patch("/:id", updateHotel);
 // router.put("/:id",replaceHotel);
 // router.delete("/:id",deleteHotel );
-module.exports = router;
+// module.exports = router;
