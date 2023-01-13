@@ -17,7 +17,8 @@ app.use('/api',allRoute)
 app.all("*", (req, res,next) => {
     // res.status(400).send("page not found");
     next({
-        message:"page not found"
+        message:"page not found",
+        status:404
     });
   });
    

@@ -1,4 +1,4 @@
-const nextHandlers = require("../helpers/nextHandlers");
+const nextHandlers = require("../utilities/nextHandlers");
 const hotelModel = require("../models/hotelModel");
 
 const getAllHotels = async (req,res,next) =>{

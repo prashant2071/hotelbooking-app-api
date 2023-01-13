@@ -1,5 +1,5 @@
 const handleUserError = require('../errorModelHandler/handleUserError');
-const nextHandlers = require('../helpers/nextHandlers');
+const nextHandlers = require('../utilities/nextHandlers');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {SECRET_KEY} = require('../config/envCrediantials')

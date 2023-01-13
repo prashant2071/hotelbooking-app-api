@@ -1,4 +1,4 @@
-const nextHandlers = require("../helpers/nextHandlers");
+const nextHandlers = require("../utilities/nextHandlers");
 const UsersModel = require("../models/userModel");
 
 const getAllUsers = async (req,res,next) =>{
