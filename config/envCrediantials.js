@@ -14,3 +14,6 @@ module.exports.SERVERPORT={
 module.exports.WHICH_DATABASE={
     WHICH_DATABASE:process.env.WHICH_DATABASE
 }
+module.exports.SECRET_KEY={
+    KEY:process.env.SECRET_KEY
+}

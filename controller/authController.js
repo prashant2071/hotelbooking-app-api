@@ -1,6 +1,8 @@
 const handleUserError = require('../errorModelHandler/handleUserError');
 const nextHandlers = require('../helpers/nextHandlers');
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const {SECRET_KEY} = require('../config/envCrediantials')
 const userModel = require('../models/userModel')
 
 
@@ -28,22 +30,29 @@ const registerUser =async (req,res,next) =>{
 }
 const loginUser =async (req,res,next) =>{
     try{
-    const {username,password} = req.body;
+    const {username} = req.body;
     const user = await userModel.findOne({username:username})
     if(!user) {
         return next("User not found");
     }
-    const isPasswordCorrect = await bcrypt.compare(password,user.password);
+    const isPasswordCorrect = await bcrypt.compare(req.body.password,user.password);
     if(!isPasswordCorrect){
-    return next("Wrong username or password")}
-    res.status(200).json({
+    return next("Wrong username or password")
+}
+const {isAdmin,password,...rest} = user._doc;
+    const token=jwt.sign({
+        id:user._id,
+        isAdmin:isAdmin
+    },SECRET_KEY.KEY)
+    res.cookie("access_token",token,
+    {httpOnly:true},)
+    .status(200).json({
         success:true,
         message:"login successfully",
-        data:user
+        data:rest
     })
 }catch(err){
-    const errors= handleUserError(err);
-    next(nextHandlers("user creation failed",errors))
+    next(nextHandlers("login failed!",err))
 }
 
 

@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const {createUser} =require("../controller/userController")
+const {createUser,getAllUsers,getUserById,updateUser,deleteUser,replaceUser} =require("../controller/userController")
 
 
-// router.get("/",getAllHotels );
-// router.get("/:id",getHotelById );
-// router.post("/",createUser );
-// router.patch("/:id", updateHotel);
-// router.put("/:id",replaceHotel);
-// router.delete("/:id",deleteHotel );
-// module.exports = router;
+router.get("/",getAllUsers );
+router.get("/:id",getUserById );
+router.post("/",createUser );
+router.patch("/:id", updateUser);
+router.put("/:id",replaceUser);
+router.delete("/:id",deleteUser );
+module.exports = router;

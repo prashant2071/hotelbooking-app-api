@@ -3,13 +3,14 @@ const dotenv = require('dotenv')
 dotenv.config();
 const app =express();
 const connectDatabase = require('./database/connection');
-const allRoute = require('./routes/allroute')
+const allRoute = require('./routes/allroute');
+const cookieParser = require('cookie-parser')
 
 
 const {SERVERPORT} = require('./config/envCrediantials')
 connectDatabase();
-
-app.use(express.json())
+app.use(cookieParser());
+app.use(express.json());
 
 app.use('/api',allRoute)
 
