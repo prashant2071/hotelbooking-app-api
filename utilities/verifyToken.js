@@ -4,7 +4,7 @@ const {SECRET_KEY} = require('../config/envCrediantials')
  
 const verifytoken = (req,res,next) =>{
     try{
-    const token = req.cookie.access_token;
+    const token = req.cookies.access_token;
     if(!token){
         return next(nextHandlers("you are not authenticated",{status:401}))
     }
@@ -18,4 +18,28 @@ catch(err){
     next(nextHandlers("token authentication failed",err))
 }
 }
-module.exports=verifytoken
+const verifyUser = (req,res,next) =>{
+    verifytoken (req,res,next,()=>{
+        if(req.user.id===req.params.id || req.user.isAdmin){
+            next()
+        }
+        else{
+            return next(nextHandlers("you are not authenticated!",{status:403}))
+        }
+    })
+}
+    const verifyAdmin = (req,res,next) =>{
+        verifytoken (req,res,next,()=>{
+            if(req.user.isAdmin){
+                next()
+            }
+            else{
+                return next(nextHandlers("you are not authorize!",{status:403}))
+            }
+        })
+}
+module.exports={
+    verifytoken,
+    verifyUser,
+    verifyAdmin
+}

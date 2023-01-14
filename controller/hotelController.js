@@ -1,11 +1,13 @@
 const nextHandlers = require("../utilities/nextHandlers");
 const hotelModel = require("../models/hotelModel");
+const { successMsg } = require("../utilities/success");
 
 const getAllHotels = async (req,res,next) =>{
     const {id} = req.params
     try {
       const updatedHotel = await hotelModel.find()
-      res.status(200).json({
+      res.json({
+        ...successMsg,
         message: "fetched all hotel successfully",
         data: updatedHotel,
       });
@@ -18,7 +20,8 @@ const getHotelById = async (req,res,next) =>{
     const {id} = req.params
     try {
       const getHotelById = await hotelModel.findById(id)
-      res.status(200).json({
+      res.json({
+        ...successMsg,
         message: "hotel found successfully",
         data: getHotelById,
       });
@@ -31,7 +34,8 @@ const createHotel = async (req,res,next) =>{
     const Hotel = new hotelModel(req.body);
     try {
       const savedHotel = await Hotel.save();
-      res.status(200).json({
+      res.json({
+        ...successMsg,
         message: "hotel created successfully",
         data: savedHotel,
       });
@@ -48,7 +52,8 @@ const updateHotel = async (req,res,next) =>{
     const {id} = req.params
     try {
       const updatedHotel = await hotelModel.findByIdAndUpdate(id,{$set:req.body},{new:true})
-      res.status(200).json({
+      res.json({
+        ...successMsg,
         message: "hotel updated successfully",
         data: updatedHotel,
       });
@@ -58,24 +63,26 @@ const updateHotel = async (req,res,next) =>{
       }
     }
 
-const replaceHotel = async (req,res,next) =>{
-    const {id} = req.params
-    try {
-      const replacedHotel = await hotelModel.findOneAndReplace(id,{$set:req.body},{new:true})
-      res.status(200).json({
-        message: "hotel replaced successfully",
-        data: replacedHotel,
-      });
-    } 
-    catch (err) {
-        next(nextHandlers("hotel replacing failed!!",err))
-      }
-    }
+// const replaceHotel = async (req,res,next) =>{
+//     const {id} = req.params
+//     try {
+//       const replacedHotel = await hotelModel.findOneAndReplace(id,{$set:req.body},{new:true})
+//       res.json({
+//         ...successMsg,
+//         message: "hotel replaced successfully",
+//         data: replacedHotel,
+//       });
+//     } 
+//     catch (err) {
+//         next(nextHandlers("hotel replacing failed!!",err))
+//       }
+//     }
 const deleteHotel = async (req,res,next) =>{
     const {id} = req.params
     try {
       const deletedHotel = await hotelModel.findByIdAndDelete(id,{$set:req.body})
-      res.status(200).json({
+      res.json({
+        ...successMsg,
         message: "hotel deleted successfully",
         data: deletedHotel,
       });
@@ -90,6 +97,5 @@ module.exports={
     getHotelById,
     createHotel,
     updateHotel,
-    replaceHotel,
     deleteHotel
 }

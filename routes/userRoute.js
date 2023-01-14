@@ -1,20 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const {createUser,getAllUsers,getUserById,updateUser,deleteUser,replaceUser} =require("../controller/userController");
-const verifytoken = require("../utilities/verifyToken");
+const {getAllUsers,getUserById,updateUser,deleteUser} =require("../controller/userController");
+const {verifyUser,verifytoken, verifyAdmin} = require("../utilities/verifyToken");
 const {successMsg} = require("../utilities/success");
 
 
-router.get("/",getAllUsers );
+router.get("/",verifyAdmin,getAllUsers );
 router.get("/checkauthentication",verifytoken,(req,res,next)=>{
     res.json({
         ...successMsg,
         message:"token is valid",
     })
 })
-router.get("/:id",getUserById );
-router.post("/",createUser );
-router.patch("/:id", updateUser);
-router.put("/:id",replaceUser);
-router.delete("/:id",deleteUser );
+router.get("/checkuser/:id",verifyUser,(req,res,next)=>{
+    res.json({
+        ...successMsg,
+        message:"user is valid you can delete and remove",
+    })
+})
+router.get("/checkisAdmin/:id",verifyAdmin,(req,res,next)=>{
+    res.json({
+        ...successMsg,
+        message:"hi admin you are admin do as you like",
+    })
+})
+router.get("/:id",verifyUser,getUserById );
+router.patch("/:id",verifyUser,updateUser);
+// router.put("/:id",verifyUser,replaceUser);
+router.delete("/:id",verifyUser,deleteUser );
 module.exports = router;

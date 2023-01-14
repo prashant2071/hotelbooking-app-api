@@ -3,21 +3,25 @@ const nextHandlers = require('../utilities/nextHandlers');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {SECRET_KEY} = require('../config/envCrediantials')
-const userModel = require('../models/userModel')
+const userModel = require('../models/userModel');
+const { successMsg } = require('../utilities/success');
 
 
 const registerUser =async (req,res,next) =>{
     try{
-    const {username,email,password} = req.body   
+    const {username,email,password,role,isAdmin} = req.body   
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(password, salt); 
     const user = new userModel({
         username:username,
         password:hash,
-        email:email
+        email:email,
+        role:role,
+        isAdmin:isAdmin
     });
     await user.save();
-    res.status(200).json({
+    res.json({
+        ...successMsg,
         message:"user created successfully",
         data:user
     })
@@ -46,8 +50,8 @@ const {isAdmin,password,...rest} = user._doc;
     },SECRET_KEY.KEY)
     res.cookie("access_token",token,
     {httpOnly:true},)
-    .status(200).json({
-        success:true,
+    .json({
+        ...successMsg,
         message:"login successfully",
         data:rest
     })

@@ -3,7 +3,8 @@ const handleError = (err) =>{
     const errors= {
         message:{},
         status:500,
-        code:'',
+        name:err.name,
+        code:err.code||"",
         stack:err.stack
     }
     console.log(err)

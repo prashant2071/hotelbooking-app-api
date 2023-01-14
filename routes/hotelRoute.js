@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const {getAllHotels,getHotelById,createHotel,updateHotel,replaceHotel,deleteHotel} =require("../controller/hotelController")
+const {getAllHotels,getHotelById,createHotel,updateHotel,deleteHotel} =require("../controller/hotelController");
+const { verifyUser, verifyAdmin } = require("../utilities/verifyToken");
 
 
-router.get("/",getAllHotels );
+router.get("/",verifyUser,getAllHotels );
 router.get("/:id",getHotelById );
-router.post("/",createHotel );
-router.patch("/:id", updateHotel);
-router.put("/:id",replaceHotel);
-router.delete("/:id",deleteHotel );
+router.post("/",verifyAdmin,createHotel );
+router.patch("/:id",verifyAdmin, updateHotel);
+// router.put("/:id",verifyAdmin,replaceHotel);
+router.delete("/:id",verifyAdmin,deleteHotel );
 module.exports = router;

@@ -31,10 +31,11 @@ app.all("*", (req, res,next) => {
     res
     .status(err.status||500)
     .json({
-      msg: err.message|| err ,
-      name:err.name,
-      errMessage:err.errMessage,
+      success:false,
       status: err.status||500 ,
+      msg: err.message|| err ,
+      errMessage:err.errMessage,
+      name:err.name,
       code:err.code,
       stack :err.stack
     });
