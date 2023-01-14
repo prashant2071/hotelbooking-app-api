@@ -4,13 +4,15 @@ dotenv.config();
 const app =express();
 const connectDatabase = require('./database/connection');
 const allRoute = require('./routes/allroute');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan')
 
 
 const {SERVERPORT} = require('./config/envCrediantials')
 connectDatabase();
 app.use(cookieParser());
 app.use(express.json());
+app.use(morgan('dev'))
 
 app.use('/api',allRoute)
 
@@ -30,6 +32,7 @@ app.all("*", (req, res,next) => {
     .status(err.status||500)
     .json({
       msg: err.message|| err ,
+      name:err.name,
       errMessage:err.errMessage,
       status: err.status||500 ,
       code:err.code,
