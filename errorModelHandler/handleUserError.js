@@ -23,6 +23,16 @@ const handleError = (err) =>{
         }
 
     }
+    else if(err._message==="Room validation failed"){
+        errors.message ={
+            title:err.errors.title?err.errors.title.properties.message:"",
+            price:err.errors.price?err.errors.price.properties.message:"",
+            maxPeople:err.errors.maxPeople?err.errors.maxPeople.properties.message:"",
+            description:err.errors.description?err.errors.description.properties.message:""
+
+
+        }
+    }
     return errors
 }
 module.exports=handleError
