@@ -3,6 +3,7 @@ const UsersModel = require("../models/userModel");
 const { successMsg } = require("../utilities/success");
 const handleError = require("../errorModelHandler/handleUserError");
 
+//GETALL
 const getAllUsers = async (req,res,next) =>{
     const {id} = req.params
     try {
@@ -17,7 +18,7 @@ const getAllUsers = async (req,res,next) =>{
         next(nextHandlers("Users fetching failed",err))
       }
     }
-
+//GET
 const getUserById = async (req,res,next) =>{
     const {id} = req.params
     try {
@@ -32,7 +33,7 @@ const getUserById = async (req,res,next) =>{
       next(nextHandlers("failed to find Users",err))
       }
     }
-
+//UPDATE
 const updateUser = async (req,res,next) =>{
     const {id} = req.params
     try {
@@ -48,21 +49,7 @@ const updateUser = async (req,res,next) =>{
       }
     }
 
-// const replaceUser = async (req,res,next) =>{
-//     const {id} = req.params
-//     try {
-//       const replacedUsers = await UsersModel.findOneAndReplace(id,{$set:req.body},{new:true})
-//       res.json({
-//         ...successMsg,
-//         message: "User replaced successfully",
-//         data: replacedUsers,
-//       });
-//     } 
-//     catch (err) {
-//         next(nextHandlers("User replacing failed!!",err))
-//       }
-//     }
-
+//DELETE
 const deleteUser = async (req,res,next) =>{
     const {id} = req.params
     try {

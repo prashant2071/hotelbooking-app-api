@@ -14,10 +14,11 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(morgan('dev'))
 
+//ALL API ROUTE
 app.use('/api',allRoute)
 
+//PAGE NOT FOUND
 app.all("*", (req, res,next) => {
-    // res.status(400).send("page not found");
     next({
         message:"page not found",
         status:404
@@ -25,7 +26,7 @@ app.all("*", (req, res,next) => {
   });
    
 
-  //error handelling middleware
+  //ERROR HANDELLING MIDDLEWARE
   app.use( function(err, req, res,next) {
     console.log("the error is",err);
     res
