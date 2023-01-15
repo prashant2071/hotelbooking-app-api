@@ -22,7 +22,7 @@ const RoomSchema = new Schema({
     },
     maxPeople:{
         type:Number,
-        required:true
+        required:[true,"required feild"]
     },
     description:{
         ...dataType

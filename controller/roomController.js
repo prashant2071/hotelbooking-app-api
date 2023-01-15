@@ -4,11 +4,27 @@ const nextHandlers =require('../utilities/nextHandlers');
 const handleError = require('../errorModelHandler/handleUserError');
 const { successMsg } = require('../utilities/success');
 
+//GETALL
+const getRooms = async (req,res,next) =>{
+  try {
+    const room = await roomModel.find();
+    if(!room[0])return next(nextHandlers("No room found!",{status:404}))
+    res.json({
+      ...successMsg,
+      message: "rooms fetched successfully",
+      data: room,
+    });
+  } 
+  catch (err) {
+      next(nextHandlers("fetching rooms failed!!",err))
+    }
+  }
 
+//CREATE
 const createRoom = async(req,res,next) =>{
+  const {hotelId} = req.params;
+  const newRoom = new roomModel(req.body);
     try{
-    const hotelId = req.params.hotelId;
-    const newRoom = new roomModel(req.body);
     const savedRoom = await newRoom.save();
     try{
         await hotelModel.findByIdAndUpdate(hotelId,{
@@ -16,7 +32,7 @@ const createRoom = async(req,res,next) =>{
         })
     }
     catch(err){
-        next(err)
+        next(nextHandlers("hotel updating failed!",err))
     }
     res.json({
         ...successMsg,
@@ -24,14 +40,39 @@ const createRoom = async(req,res,next) =>{
     })
     }
     catch(err){
-        const errros = handleError(err);
-        next(nextHandlers("Room saving failed",err));
+        const errors = handleError(err);
+        next(nextHandlers("Room saving failed",errors));
     }
 }
+
+//GET
+const getRoomById = async (req,res,next) =>{
+  const {id} = req.params
+  console.log("the id is ",id)
+  try {
+    const room = await roomModel.findById(id)
+    console.log("the room data ",room)
+    if(!room)return next(nextHandlers("No room found!",{status:404}));
+    res.json({
+      ...successMsg,
+      message: "room fetched successfully",
+      data: room,
+    });
+  } 
+  catch (err) {
+      next(nextHandlers("fetching room failed!!",err))
+    }
+  }
+
+  //UPDATE
 const updateRoom = async (req,res,next) =>{
     const {id} = req.params
     try {
-      const updatedRoom = await roomModel.findByIdAndUpdate(id,{$set:req.body},{new:true})
+      const updatedRoom = await roomModel.findByIdAndUpdate(
+        id,
+        {$set:req.body},
+        {new:true})
+      if(!updatedRoom) return next(nextHandlers("no room found",{status:404}))  
       res.json({
         ...successMsg,
         message: "room updated successfully",
@@ -43,24 +84,23 @@ const updateRoom = async (req,res,next) =>{
       }
     }
 
-// const replaceHotel = async (req,res,next) =>{
-//     const {id} = req.params
-//     try {
-//       const replacedHotel = await hotelModel.findOneAndReplace(id,{$set:req.body},{new:true})
-//       res.json({
-//         ...successMsg,
-//         message: "hotel replaced successfully",
-//         data: replacedHotel,
-//       });
-//     } 
-//     catch (err) {
-//         next(nextHandlers("hotel replacing failed!!",err))
-//       }
-//     }
+//DELETE
 const deleteRoom = async (req,res,next) =>{
-    const {id} = req.params
+    const {id,hotelId} = req.params
+    console.log("hotelId is ",hotelId);
+    console.log("roomId is ",id)
+
     try {
-      const deletedRoom = await roomModel.findByIdAndDelete(id,{$set:req.body})
+      const deletedRoom = await roomModel.findByIdAndDelete(id)
+      if(!deletedRoom) return next(nextHandlers("item not found",{status:404}));
+      try{
+        await hotelModel.findByIdAndUpdate(hotelId,{
+          $pull:{rooms:id}
+        })
+      }
+      catch(err){
+        next(err)
+      }
       res.json({
         ...successMsg,
         message: "room deleted successfully",
@@ -73,7 +113,8 @@ const deleteRoom = async (req,res,next) =>{
     }
 
 module.exports={
-
+    getRooms,
+    getRoomById,
     createRoom,
     updateRoom,
     deleteRoom

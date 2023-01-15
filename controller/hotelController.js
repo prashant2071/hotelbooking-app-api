@@ -2,34 +2,45 @@ const nextHandlers = require("../utilities/nextHandlers");
 const hotelModel = require("../models/hotelModel");
 const { successMsg } = require("../utilities/success");
 
+//GETALL
 const getAllHotels = async (req,res,next) =>{
     const {id} = req.params
     try {
-      const updatedHotel = await hotelModel.find()
+      const allHotels = await hotelModel.find()
+      if(!allHotels[0])return next(nextHandlers("No hotels found!",{status:404}));
+
       res.json({
         ...successMsg,
         message: "fetched all hotel successfully",
-        data: updatedHotel,
+        data: allHotels,
       });
     } 
     catch (err) {
         next(nextHandlers("hotel fetching faild",err))
       }
     }
+
+//GET    
 const getHotelById = async (req,res,next) =>{
     const {id} = req.params
+    console.log("the id data is",id)
     try {
-      const getHotelById = await hotelModel.findById(id)
+      const getHotel = await hotelModel.findById(req.params.id)
+      console.log("the hotel data is",getHotel);
+      if(!getHotel)return next(nextHandlers("No hotel found!",{status:404}));
+
       res.json({
         ...successMsg,
         message: "hotel found successfully",
-        data: getHotelById,
+        data: getHotel,
       });
     } 
     catch (err) {
       next(nextHandlers("failed to find hotel",err))
       }
     }
+
+//CREATE    
 const createHotel = async (req,res,next) =>{
     const Hotel = new hotelModel(req.body);
     try {
@@ -48,10 +59,12 @@ const createHotel = async (req,res,next) =>{
       }
     }
 }
+//UPDATE
 const updateHotel = async (req,res,next) =>{
     const {id} = req.params
     try {
       const updatedHotel = await hotelModel.findByIdAndUpdate(id,{$set:req.body},{new:true})
+      if(!updatedHotel)return next(nextHandlers("No hotel found!",{status:404}));
       res.json({
         ...successMsg,
         message: "hotel updated successfully",
@@ -63,24 +76,12 @@ const updateHotel = async (req,res,next) =>{
       }
     }
 
-// const replaceHotel = async (req,res,next) =>{
-//     const {id} = req.params
-//     try {
-//       const replacedHotel = await hotelModel.findOneAndReplace(id,{$set:req.body},{new:true})
-//       res.json({
-//         ...successMsg,
-//         message: "hotel replaced successfully",
-//         data: replacedHotel,
-//       });
-//     } 
-//     catch (err) {
-//         next(nextHandlers("hotel replacing failed!!",err))
-//       }
-//     }
+//DELETE
 const deleteHotel = async (req,res,next) =>{
     const {id} = req.params
     try {
       const deletedHotel = await hotelModel.findByIdAndDelete(id,{$set:req.body})
+      if(!updatedHotel)return next(nextHandlers("No hotel found!",{status:404}));
       res.json({
         ...successMsg,
         message: "hotel deleted successfully",
