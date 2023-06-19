@@ -3,7 +3,7 @@ const UsersModel = require("../models/userModel");
 const { successMsg } = require("../utilities/success");
 const handleError = require("../errorModelHandler/handleUserError");
 
-//GETALL
+//GET ALL USER
 const getAllUsers = async (req,res,next) =>{
     const {id} = req.params
     try {

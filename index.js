@@ -49,7 +49,6 @@ app.listen(SERVERPORT.PORT,(err)=>{
         return;
     }
     else{
-
     console.log(`server connected successfully at ${SERVERPORT.PORT}` )
     }
 })
