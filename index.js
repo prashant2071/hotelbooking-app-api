@@ -5,19 +5,22 @@ const app =express();
 const connectDatabase = require('./database/connection');
 const allRoute = require('./routes/allroute');
 const cookieParser = require('cookie-parser');
-const morgan = require('morgan')
-
-
+const cors = require('cors');
+const morgan = require('morgan');
+const {notFound}= require('./errorModelHandler/handleUserError')
 const {SERVERPORT} = require('./config/envCrediantials')
 connectDatabase();
 app.use(cookieParser());
 app.use(express.json());
+app.use(cors());
 app.use(morgan('dev'))
 
 //ALL API ROUTE
 app.use('/api',allRoute)
 
 //PAGE NOT FOUND
+// app.use(notFound);
+
 app.all("*", (req, res,next) => {
     next({
         message:"page not found",

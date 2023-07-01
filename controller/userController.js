@@ -1,7 +1,7 @@
 const nextHandlers = require("../utilities/nextHandlers");
 const UsersModel = require("../models/userModel");
 const { successMsg } = require("../utilities/success");
-const handleError = require("../errorModelHandler/handleUserError");
+const {handleError} = require("../errorModelHandler/handleUserError");
 
 //GET ALL USER
 const getAllUsers = async (req,res,next) =>{

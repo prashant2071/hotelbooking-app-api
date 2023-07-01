@@ -2,7 +2,9 @@ const nextHandlers = require('./nextHandlers');
 const jwt = require('jsonwebtoken');
 const {SECRET_KEY} = require('../config/envCrediantials')
  
+//VERIFY TOKEN
 const verifytoken = (req,res,next) =>{
+    console.log("the cookie is",req.cookies)
     try{
     const token = req.cookies.access_token;
     if(!token){
@@ -18,6 +20,8 @@ catch(err){
     next(nextHandlers("token authentication failed",err))
 }
 }
+
+//VERIFY USER
 const verifyUser = (req,res,next) =>{
     verifytoken (req,res,next,()=>{
         if(req.user.id===req.params.id || req.user.isAdmin){
@@ -28,7 +32,9 @@ const verifyUser = (req,res,next) =>{
         }
     })
 }
-    const verifyAdmin = (req,res,next) =>{
+
+//VERIFY ADMIN
+const verifyAdmin = (req,res,next) =>{
         verifytoken (req,res,next,()=>{
             if(req.user.isAdmin){
                 next()

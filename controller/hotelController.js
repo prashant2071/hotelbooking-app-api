@@ -81,7 +81,7 @@ const deleteHotel = async (req,res,next) =>{
     const {id} = req.params
     try {
       const deletedHotel = await hotelModel.findByIdAndDelete(id,{$set:req.body})
-      if(!updatedHotel)return next(nextHandlers("No hotel found!",{status:404}));
+      if(!deletedHotel)return next(nextHandlers("No hotel found!",{status:404}));
       res.json({
         ...successMsg,
         message: "hotel deleted successfully",
@@ -92,11 +92,31 @@ const deleteHotel = async (req,res,next) =>{
         next(nextHandlers("hotel deletion failed!!",err))
       }
     }
+ const countByCity = async (req, res, next) => {
+      console.log("hello")
+      const cities = req.query.city.split(",");
+      console.log(cities);
+      try {
+        const list = await Promise.all(
+          cities.map((city) => {
+            return hotelModel.countDocuments({ city: city });
+          })
+        );
+        res.json({
+          ...successMsg,
+          message: "get hotel room by cities",
+          data: list,
+        });
+      } catch (err) {
+        next(nextHandlers("failed to list city", err));
+      }
+    };
 
 module.exports={
     getAllHotels,
     getHotelById,
     createHotel,
     updateHotel,
-    deleteHotel
+    deleteHotel,
+    countByCity
 }
