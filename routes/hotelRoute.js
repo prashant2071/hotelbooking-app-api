@@ -11,7 +11,7 @@ const {
 const { verifyUser, verifyAdmin } = require("../utilities/verifyToken");
 
 //GET ALL
-router.get("/", verifyUser, getAllHotels);
+router.get("/", getAllHotels);
 
 //GET COUNT BY CITY
 router.get("/countByCity", countByCity);

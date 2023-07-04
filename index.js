@@ -19,7 +19,7 @@ app.use(morgan('dev'))
 app.use('/api',allRoute)
 
 //PAGE NOT FOUND
-// app.use(notFound);
+app.use(notFound);
 
 app.all("*", (req, res,next) => {
     next({

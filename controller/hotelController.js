@@ -4,6 +4,7 @@ const { successMsg } = require("../utilities/success");
 
 //GETALL
 const getAllHotels = async (req,res,next) =>{
+    console.log("hello hotels label")
     const {id} = req.params
     try {
       const allHotels = await hotelModel.find()
