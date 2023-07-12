@@ -1,7 +1,7 @@
 const mongoose =require('mongoose')
 const {MONGOCLOUD_DB,DB,WHICH_DATABASE} = require('../config/envCrediantials')
 let url={};
-if(WHICH_DATABASE.WHICH_DATABASE==="CLOUD"){
+if(WHICH_DATABASE.WHICH_DATABASE=="CLOUDS"){
     url.url=MONGOCLOUD_DB.CLOUD_URL
     url.type="cloud"
 }
@@ -10,13 +10,7 @@ else{
     url.type="local"
 }
 const connectDatabase = async() => {
-            // mongoose.set('strictQuery', true);
-            // mongoose.connect(url).
-            // then(()=>{
-            //     console.log("database connected successfully")
-            // }).catch((err)=>{
-            //     console.log("database connection failed!!",err)
-            // });
+
     try {    
         mongoose.set('strictQuery', true);
         await mongoose.connect(url.url);

@@ -94,7 +94,6 @@ const deleteHotel = async (req,res,next) =>{
       }
     }
  const countByCity = async (req, res, next) => {
-      console.log("hello")
       const cities = req.query.city.split(",");
       console.log(cities);
       try {
@@ -112,6 +111,21 @@ const deleteHotel = async (req,res,next) =>{
         next(nextHandlers("failed to list city", err));
       }
     };
+    const countByType = async (req, res, next) => {
+      const cities = req.query.city.split(",");
+      console.log(cities);
+      try {
+ 
+      
+        res.json({
+          ...successMsg,
+          message: "get hotel room by cities",
+          data: list,
+        });
+      } catch (err) {
+        next(nextHandlers("failed to list city", err));
+      }
+    };
 
 module.exports={
     getAllHotels,
@@ -119,5 +133,6 @@ module.exports={
     createHotel,
     updateHotel,
     deleteHotel,
-    countByCity
+    countByCity,
+    countByType
 }
