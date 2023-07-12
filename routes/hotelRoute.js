@@ -6,7 +6,8 @@ const {
   createHotel,
   updateHotel,
   deleteHotel,
-  countByCity
+  countByCity,
+  countByType
 } = require("../controller/hotelController");
 const { verifyUser, verifyAdmin } = require("../utilities/verifyToken");
 
@@ -16,12 +17,12 @@ router.get("/", getAllHotels);
 
 //GET COUNT BY CITY
 router.get("/countByCity", countByCity);
-//GET BY ID
-router.get("/:id", getHotelById);
-
 
 //GET COUNT BY TYPE
-// router.get("/countByType", countByType);
+router.get("/countByType", countByType);
+
+//GET BY ID
+router.get("/:id", getHotelById);
 
 //CREATE
 router.post("/", verifyAdmin, createHotel);
